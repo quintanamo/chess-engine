@@ -50,6 +50,7 @@ func TestIsValidMove(t *testing.T) {
 	b.Initialize()
 	b.whitePawnsPos = 0b0000000011111110100000000000000000000000000000000000000000000000
 
+	// test pushing pawn to square occupied by pawn
 	m := Move{
 		PAWN,
 		0b0000000010000000000000000000000000000000000000000000000000000000,
@@ -59,6 +60,7 @@ func TestIsValidMove(t *testing.T) {
 		t.Errorf("TestIsValidMove failed for case where pawn moves to another pawn's position")
 	}
 
+	// test pushing pawn to open square
 	m = Move{
 		PAWN,
 		0b0000000001000000000000000000000000000000000000000000000000000000,
@@ -66,5 +68,15 @@ func TestIsValidMove(t *testing.T) {
 		true}
 	if !b.IsValidMove(m) {
 		t.Errorf("TestIsValidMove failed for case where pawn moves forward once to an open square")
+	}
+
+	// test pushing pawn sidways (illegal)
+	m = Move{
+		PAWN,
+		0b0000000000000000100000000000000000000000000000000000000000000000,
+		0b0000000000000000010000000000000000000000000000000000000000000000,
+		true}
+	if b.IsValidMove(m) {
+		t.Errorf("TestIsValidMove failed for case where pawn moves sideways")
 	}
 }
